@@ -1,0 +1,6 @@
+--input dist
+--main-jar hn.jar
+--name "cljfx-hn"
+--main-class clojure.main
+--arguments -m
+--arguments hn.core
