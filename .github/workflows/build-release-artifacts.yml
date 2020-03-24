@@ -1,0 +1,63 @@
+name: Build Release Artifacts
+on:
+  release:
+    types: [created]
+jobs:
+  build-deb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '14'
+      - uses: DeLaGuardo/setup-clojure@1.0
+        with:
+          tools-deps: '1.10.1.507'
+      - run: clojure -A:uberjar
+      - run: jpackage @jpackage/common @jpackage/linux
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: cljfx-hn_1.0-1_amd64.deb
+          asset_name: cljfx-hn_1.0-1_amd64.deb
+          asset_content_type: application/vnd.debian.binary-package
+  build-dmg:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '14'
+      - uses: DeLaGuardo/setup-clojure@1.0
+        with:
+          tools-deps: '1.10.1.507'
+      - run: clojure -A:uberjar
+      - run: jpackage @jpackage/common @jpackage/mac
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: cljfx-hn-1.0.dmg
+          asset_name: cljfx-hn-1.0.dmg
+          asset_content_type: application/x-apple-diskimage
+  build-exe:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '14'
+      - run: iwr -useb download.clojure.org/install/win-install-1.10.1.536.ps1 | iex
+      - run: clojure -A:uberjar
+      - run: jpackage @jpackage/common @jpackage/windows
+      - uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: cljfx-hn-1.0.exe
+          asset_name: cljfx-hn-1.0.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
