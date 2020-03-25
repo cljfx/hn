@@ -6,6 +6,8 @@ It uses:
 - [cljfx/css](https://github.com/cljfx/css) for styling;
 - [jpackage](https://openjdk.java.net/jeps/343) for packaging.
 
+You can download the latest release [here](https://github.com/cljfx/hn/releases).
+
 ## Context
 
 JDK 14 introduced a new tool called `jpackage` that can pack a jar with a JDK into a
