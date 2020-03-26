@@ -10,18 +10,19 @@ You can download the latest release [here](https://github.com/cljfx/hn/releases)
 
 ## Context
 
-JDK 14 introduced a new tool called `jpackage` that can pack a jar with a JDK into a
-platform-specific executable. Previously packaging java-based apps for distribution was
+Previously packaging java-based apps for distribution was
 one of the pain points compared to web: one had to strip down the JDK and figure
-out how to pack it for every platform themselves. Now the year of Clojure on the desktop
-is finally right around the corner, all you need is this small example.
+out how to pack it with uberjar for every platform themselves. JDK 14 introduces a new 
+tool called `jpackage` (part of JDK distribution) that does all this work. Now the year 
+of Clojure on the desktop is finally right around the corner, all you need is this small 
+example to get started.
 
 ## Walk-through
 
 The code is pretty simple: [hn.core](src/hn/core.clj) is a main namespace that starts
 an app in its `-main` function. Note that it uses `(Platform/setImplicitExit true)` so
 closing the window will stop JavaFX application thread. This, together with custom daemon 
-executor for agents, will allow to gracefully stop exit the app just by closing the app 
+executor for agents, will allow to gracefully exit the app just by closing the app 
 window.
 
 The build process is 2-step:
@@ -29,8 +30,8 @@ The build process is 2-step:
 [depstar](https://github.com/seancorfield/depstar) library with `clj -A:uberjar` alias.
 2. Use `jpackage` with common options described in [jpackage/common](jpackage/common) and 
 platform-specific options having their own files: [jpackage/linux](jpackage/linux), 
-[jpackage/mac](jpackage/mac) and [jpackage/windows](jpackage/windows). This is as simple 
-as calling `jpackage @jpackage/common @jpackage/linux` on Linux. 
+[jpackage/mac](jpackage/mac) and [jpackage/windows](jpackage/windows). For example, if you 
+are on Linux, you just need to execute `jpackage @jpackage/common @jpackage/linux`. 
 
 Cross-compiling is not supported by jpackage, so you will need access to all 3 OSes to 
 assemble desktop packages. This repo has an example of github actions to create all 
