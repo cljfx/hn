@@ -15,9 +15,9 @@ You can download the latest release [here](https://github.com/cljfx/hn/releases)
 Previously packaging java-based apps for distribution was
 one of the pain points compared to web: one had to strip down the JDK and figure
 out how to pack it with uberjar for every platform themselves. JDK 14 introduces a new 
-tool called `jpackage` (part of JDK distribution) that does all this work. Now the year 
-of Clojure on the desktop is finally right around the corner, all you need is this small 
-example to get started.
+tool called `jpackage` (part of JDK distribution) that does all this work. Now the [year 
+of Clojure on the desktop](https://vlaaad.github.io/year-of-clojure-on-the-desktop) is 
+finally right around the corner, all you need is this small example to get started.
 
 ## Walk-through
 
