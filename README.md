@@ -1,5 +1,7 @@
 # Cljfx-based Hacker News reader app
 
+![Screenshot](doc/screenshot.png)
+
 This is an example of a desktop application that can be built on top of cljfx/java stack. 
 It uses:
 - [cljfx](https://github.com/cljfx/cljfx) for UI and behavior;
