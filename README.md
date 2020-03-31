@@ -10,6 +10,8 @@ It uses:
 
 You can download the latest release [here](https://github.com/cljfx/hn/releases).
 
+You can also try using `clj -Sdeps '{:deps {hn {:git/url "https://github.com/cljfx/hn" :sha "d3bbccb9fd6ebc6e278bdf0dc3f49351d826025c"}}}' -m hn.core`
+
 ## Context
 
 Previously packaging java-based apps for distribution was
