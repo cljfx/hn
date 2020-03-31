@@ -19,6 +19,15 @@ tool called `jpackage` (part of JDK distribution) that does all this work. Now t
 of Clojure on the desktop](https://vlaaad.github.io/year-of-clojure-on-the-desktop) is 
 finally right around the corner, all you need is this small example to get started.
 
+## What is intentionally left out
+
+The purpose of this example application is to show packaging capabilities of cljfx and
+jpackage, to keep it simple some build steps where left out:
+- startup time can be improved significantly by AOT-compiling clojure code;
+- application package size can be reduced: you can use `jlink` to minify the JDK, and if 
+  your application does not need to use webkit (which is used in this example), you can
+  exclude cljfx's dependency on javafx-web.
+
 ## Walk-through
 
 The code is pretty simple: [hn.core](src/hn/core.clj) is a main namespace that starts
