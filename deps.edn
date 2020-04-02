@@ -1,7 +1,14 @@
-{:deps {cljfx {:mvn/version "1.6.7"}
+{:deps {org.clojure/clojure {:mvn/version "1.10.2-alpha1"}
+        cljfx {:mvn/version "1.6.7"}
         cljfx/css {:mvn/version "1.1.0"}
         clj-http {:mvn/version "3.9.1"}
         metosin/jsonista {:mvn/version "0.2.5"}
         crouton {:mvn/version "0.1.2"}}
- :aliases {:uberjar {:extra-deps {seancorfield/depstar {:mvn/version "0.5.2"}}
+ :aliases {:build {:extra-paths ["build"]
+                   :extra-deps {com.gluonhq/substrate {:mvn/version "0.0.16"}}}
+           :compile {:jvm-opts ["-Dclojure.compiler.direct-linking=true"]
+                     :main-opts ["-m" "compile"]}
+           :native-image {:main-opts ["-m" "native-image"]}
+           :uberjar {:extra-deps {seancorfield/depstar {:mvn/version "0.5.2"}}
+                     :paths ["classes"]
                      :main-opts ["-m" "hf.depstar.uberjar" "dist/hn.jar"]}}}

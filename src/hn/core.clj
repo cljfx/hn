@@ -4,7 +4,8 @@
             [hn.event :as event]
             [hn.view :as view])
   (:import [javafx.application Platform]
-           [java.util.concurrent Executors ThreadFactory]))
+           [java.util.concurrent Executors ThreadFactory])
+  (:gen-class))
 
 (defn http-effect [v dispatch!]
   (try

@@ -2,3 +2,6 @@
 /.idea
 /hn.iml
 /dist
+/classes
+/native-build
+/target
