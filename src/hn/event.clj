@@ -11,13 +11,17 @@
 
 (defmulti handle ::type)
 
+(defmethod handle ::exception [{:keys [state exception]}]
+  {:state (assoc state :error (.getMessage exception))})
+
 (defmethod handle ::load-stories [_]
   {:http {:method :get
           :url "https://hacker-news.firebaseio.com/v0/topstories.json"
-          :on-response {::type ::process-stories}}})
+          :on-response {::type ::process-stories}
+          :on-exception {::type ::exception}}})
 
 (defmethod handle ::process-stories [{:keys [state response]}]
-  (let [stories (parse-response-body response)]
+  (let [stories (take 100 (parse-response-body response))]
     (into [[:state (assoc state :stories stories)]]
           (map (fn [id]
                  [:dispatch {::type ::load-story :id id}]))
@@ -26,7 +30,8 @@
 (defmethod handle ::load-story [{:keys [id]}]
   {:http {:method :get
           :url (str "https://hacker-news.firebaseio.com/v0/item/" id ".json")
-          :on-response {::type ::process-story :id id}}})
+          :on-response {::type ::process-story :id id}
+          :on-exception {::type ::exception}}})
 
 (defmethod handle ::process-story [{:keys [state id response]}]
   {:state (assoc-in state [:items id] (parse-response-body response))})
