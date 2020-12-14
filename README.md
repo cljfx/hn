@@ -23,7 +23,6 @@ finally right around the corner, all you need is this small example to get start
 
 The purpose of this example application is to show packaging capabilities of cljfx and
 jpackage, to keep it simple some build steps where left out:
-- startup time can be improved significantly by AOT-compiling clojure code;
 - application package size can be reduced: you can use `jlink` to minify the JDK, and if 
   your application does not need to use webkit (which is used in this example), you can
   exclude cljfx's dependency on javafx-web.
@@ -38,7 +37,13 @@ window.
 
 The build process is 2-step:
 1. Assemble an uberjar. Here it's done using Sean Corfield's 
-[depstar](https://github.com/seancorfield/depstar) library with `clj -A:uberjar` alias.
+[depstar](https://github.com/seancorfield/depstar) library:
+   - `clj -Spom`
+   - `clj -X:uberjar`
+
+The built uberjar will include AOT-compiled code and can be executed via 
+`java -jar dist/hn.jar`, but we will use `jpackage` to build OS distributions:
+
 2. Use `jpackage` with common options described in [jpackage/common](jpackage/common) and 
 platform-specific options having their own files: [jpackage/linux](jpackage/linux), 
 [jpackage/mac](jpackage/mac) and [jpackage/windows](jpackage/windows). For example, if you 

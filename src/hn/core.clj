@@ -4,7 +4,8 @@
             [hn.event :as event]
             [hn.view :as view])
   (:import [javafx.application Platform]
-           [java.util.concurrent Executors ThreadFactory]))
+           [java.util.concurrent Executors ThreadFactory])
+  (:gen-class))
 
 (defn http-effect [v dispatch!]
   (try
@@ -23,7 +24,7 @@
   (let [*counter (atom 0)
         factory (reify ThreadFactory
                   (newThread [_ runnable]
-                    (doto (Thread. runnable (str "reveal-agent-pool-" (swap! *counter inc)))
+                    (doto (Thread. runnable (str "clfjx-hn-agent-pool-" (swap! *counter inc)))
                       (.setDaemon true))))]
     (Executors/newCachedThreadPool factory)))
 

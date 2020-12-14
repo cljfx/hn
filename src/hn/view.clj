@@ -53,6 +53,7 @@
               "-comment" {"-cell" {:-fx-padding [small-spacing default-spacing]}}
               "-stories" {"-item" {:-fx-spacing small-spacing}
                           "-cell" {:-fx-padding [small-spacing default-spacing]}}}
+       ".error" {:-fx-text-fill :red}
        ".list-cell:empty" {:-fx-background-color :transparent}
        ".scroll-bar" {:-fx-background-color :transparent
                       ":vertical" {"> .increment-button > .increment-arrow"
@@ -115,7 +116,7 @@
       :cell-factory [:setter (fx.lifecycle/detached-prop-map fx.list-cell/props)
                      :coerce create-cell-factory])))
 
-(defn stories [{:keys [stories items]}]
+(defn stories [{:keys [stories items error]}]
   {:fx/type :v-box
    :children
    [{:fx/type :h-box
@@ -126,7 +127,10 @@
                  :text "⟲"}
                 {:fx/type :label
                  :style-class "hn-title"
-                 :text "Hacker News"}]}
+                 :text "Hacker News"}
+                {:fx/type :label
+                 :style-class "error"
+                 :text error}]}
     {:fx/type ext-with-list-cell-factory
      :v-box/vgrow :always
      :props
